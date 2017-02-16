@@ -12,4 +12,8 @@ object Main extends App {
   def count[F[_] : Functor](fs: F[String]): F[Int] = fs.map(_.length)
 
   println(count(names))
+
+  def mergeLetters[M[_]: Monad](fs: M[String], converter: String => M[Char]) : M[Char] = fs.flatMap(s => converter(s))
+
+  println(mergeLetters(names, _.toList))
 }
